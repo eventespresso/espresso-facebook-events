@@ -10,45 +10,45 @@ Version: 1.0
 
 Author: Event Espresso
 Author URI: http://www.eventespresso.com
- 
+
 Copyright (c) 2008-2010 Seth Shoultes  All Rights Reserved.
 
 After reading this agreement carefully, if you do not agree to all of the terms of this agreement, you may not use this software in any way, shape, or form, partially or in full.
 
 1.0 Ownership.
 
-This software product, and any and all previous versions, produced by Seth Shoultes and/or anyone working in his stead, is a wholly owned product by Seth Shoultes and is protected by united states copyright laws and international copyright treaties extended by the United States of America.  
+This software product, and any and all previous versions, produced by Seth Shoultes and/or anyone working in his stead, is a wholly owned product by Seth Shoultes and is protected by united states copyright laws and international copyright treaties extended by the United States of America.
 
 1.1 Usage.
 
 This software is licensed to you,  You are not obtaining title to the software or any copyrights. You may not sell, resell, sub-license, rent, or lease the software for any purpose. You may not redistribute, or resell this software in any medium without prior written consent.
 
-You are free to modify the code for your own personal use. The license may be transferred to another only if you keep no copies of the software. 
+You are free to modify the code for your own personal use. The license may be transferred to another only if you keep no copies of the software.
 
 You may make one backup copy of the software, provided your copy is for backup purposes only, that you copy all proprietary notices and licenses contained therein, and such copy is used only if the original copy is defective.
 
 You may not make some or all of the software file(s) available on your web page as a separate or down-loadable reusable file.
 
-This license covers one installation of the program on one domain/url only. 
+This license covers one installation of the program on one domain/url only.
 
-THIS SOFTWARE AND THE ACCOMPANYING FILES ARE SOLD "AS IS" 
-AND WITHOUT WARRANTIES AS TO PERFORMANCE OR MERCHANTABILITY 
+THIS SOFTWARE AND THE ACCOMPANYING FILES ARE SOLD "AS IS"
+AND WITHOUT WARRANTIES AS TO PERFORMANCE OR MERCHANTABILITY
 OR ANY OTHER WARRANTIES WHETHER EXPRESSED OR IMPLIED.
 
-NO WARRANTY OF FITNESS FOR A PARTICULAR PURPOSE IS OFFERED. 
-ANY LIABILITY OF THE SELLER WILL BE LIMITED EXCLUSIVELY TO 
-PRODUCT REPLACEMENT OR REFUND OF PURCHASE PRICE. 
+NO WARRANTY OF FITNESS FOR A PARTICULAR PURPOSE IS OFFERED.
+ANY LIABILITY OF THE SELLER WILL BE LIMITED EXCLUSIVELY TO
+PRODUCT REPLACEMENT OR REFUND OF PURCHASE PRICE.
 
-Failure to install the program is not a valid reason for 
+Failure to install the program is not a valid reason for
 refund of purchase price.
 
-In no event shall Seth Shoultes be liable for any indirect, 
-special, incidental, economic, or consequential damages 
-arising out of the use of or inability to use the Software 
-or documentation, even if advised of the possibility of such 
-damages. In the event any liability is imposed on Seth 
-Shoultes, the liability of Seth Shoultes to you or any 
-third party shall not exceed the purchase price you paid for 
+In no event shall Seth Shoultes be liable for any indirect,
+special, incidental, economic, or consequential damages
+arising out of the use of or inability to use the Software
+or documentation, even if advised of the possibility of such
+damages. In the event any liability is imposed on Seth
+Shoultes, the liability of Seth Shoultes to you or any
+third party shall not exceed the purchase price you paid for
 the software and documentation.
 
 The user assumes the entire risk of using the program.
@@ -58,6 +58,10 @@ add_shortcode( "eventdetails", 'espresso_fb_eventdetails_shortcode'  );
 add_action( 'admin_menu', 'espresso_fb_menu' );
 add_action( 'init', 'espresso_fb_styles' );
 add_action( 'wp_head', 'espresso_fb_fbjssdk' );
+
+if (is_admin()) {
+	require_once('fb_admin.php');
+}
 
 register_activation_hook( __FILE__, 'espresso_fb_activate' );
 //register_deactivation_hook( __FILE__, 'espresso_fb_deactivate' );
@@ -118,7 +122,7 @@ function espresso_fb_url($event_id='') {
 	if( $event_id ){
 		return admin_url( 'options-general.php?page=' . basename( __FILE__ ) );
 	}else{
-		return admin_url( 'options-general.php?page=' . basename( __FILE__ ) );	
+		return admin_url( 'options-general.php?page=' . basename( __FILE__ ) );
 	}
 }
 function get_facebook_instance() {
@@ -210,7 +214,7 @@ function espresso_fb_updateevent($event_id){
 					$fb_e_id = $events['id'];
 					$eventstable = $wpdb->prefix . "fbevents_events";
 					$sql = "INSERT INTO $eventstable (event_id, fb_event_id,event_name) VALUES ('$event_id','$fb_e_id','$_POST[event]')";
-					$wpdb->query($sql);		
+					$wpdb->query($sql);
 				}
 			}
 		} catch ( Exception $e ) {
